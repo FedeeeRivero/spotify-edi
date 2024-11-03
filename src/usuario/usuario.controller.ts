@@ -1,32 +1,35 @@
-import { Controller, Param } from '@nestjs/common';
-import { get } from 'http';
+
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { UsuarioModel } from './usurio.Model';
+import { UsuarioService } from './usuario.service';
 
 @Controller('usuario')
 export class UsuarioController {
-  constructor(private readonly service: UsuarioController) {
+  constructor(private readonly service: UsuarioService) {}
 
-    @get()
+    @Get()
     getUsuario(){
-        return this.service.getUsuario();
+        return this.service.getusuario();
     }
 
-    @get(':id')
-    getUsuarioByName(@Param('id') name: String) {
-        return this.service.getUsuarioName(name);
+    @Get(':id')
+    getUsuarioById(@Param('id') id ) {
+        return this.service.getusuarioid(id);
     }
 
-    @post()
-    postUsuario(@Body()newUsuario: UsuarioMode1){
-        return this.service.postUsuario(newUsuario);
+    @Post()
+    postUsuario(@Body()newUsuario: UsuarioModel){
+        
+        return this.service.postusuario(newUsuario);
     }
     @Put(':id')
-    putUsuario(@Body()newUsuario: UsuariMode1, @Param('id')id: string): String {
-        return this.service.putUsuario(newUsuario, id);
+    putUsuario(@Body()newUsuario: UsuarioModel, @Param('id')id: string) {
+        return this.service.putusuario(newUsuario, id);
     }
-    @Delete()
-    deleteUsuario(): string {
-        return this.service.deleteUsuario();
+    @Delete(':id')
+    deleteUsuario(@Param('id')id){
+        return this.service.deleteusuario(id);
     }
     
-  }
+  
 }
