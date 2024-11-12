@@ -9,14 +9,21 @@ export class CancionController {
       constructor(private readonly service: CancionService) {}
     
         @Get()
-        getCanciones(@Query('name')name:string,@Query('artist')artist:string){
-            if(artist)
-                return this.service.getCancionesartist(artist)
-            else if(name)
-                return this.service.getCancionesname(name)
+        getCanciones(){
             return this.service.getCanciones();
         }
-    
+
+        @Get('name/:name')
+        getCancioneByName(@Param('name')name){
+            
+            return this.service.getCancionesname(name)
+        }
+
+        @Get('artist/:artist')
+        getCancioneByArtist(@Param('artist')artist){
+            return this.service.getCancionesartist(artist);
+        }
+
         @Get(':id')
         getCancionesById(@Param('id') id ) {
             return this.service.getCancionesid(id);
